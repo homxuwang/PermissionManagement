@@ -17,6 +17,26 @@
     from sys_role
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="findRoleByUsername" resultType="io.github.homxuwang.entity.SysRole">
+    SELECT
+      sys_userinfo.id,
+      sys_userinfo.mobile_phone,
+      sys_userinfo.user_name,
+      sys_userinfo.password,
+      sys_userinfo.email,
+      sys_userinfo.status,
+      sys_userinfo.salt,
+      sys_role.id,
+      sys_role.role_name,
+      sys_role.status,
+      sys_role.description,
+      sys_role.remark
+    FROM
+      sys_userinfo
+        RIGHT JOIN sys_user_role ON sys_userinfo.id = sys_user_role.user_id
+        LEFT JOIN sys_role ON sys_user_role.role_id = sys_role.id
+    WHERE user_name=#{username}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from sys_role
     where id = #{id,jdbcType=INTEGER}

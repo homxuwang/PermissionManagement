@@ -1,7 +1,10 @@
 package io.github.homxuwang.dao;
 
 import io.github.homxuwang.entity.UserInfo;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
+@Component
 public interface UserInfoMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +17,7 @@ public interface UserInfoMapper {
     int updateByPrimaryKeySelective(UserInfo record);
 
     int updateByPrimaryKey(UserInfo record);
+
+    //通过username查找用户信息
+    UserInfo findByUsername(@Param("username") String username);
 }

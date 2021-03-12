@@ -19,6 +19,19 @@
     from public.sys_userinfo
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="findByUsername" resultType="io.github.homxuwang.entity.UserInfo">
+    SELECT
+      sys_userinfo.id,
+      sys_userinfo.mobile_phone,
+      sys_userinfo.user_name,
+      sys_userinfo.password,
+      sys_userinfo.email,
+      sys_userinfo.status,
+      sys_userinfo.salt
+    FROM
+      sys_userinfo
+    WHERE user_name=#{username}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from public.sys_userinfo
     where id = #{id,jdbcType=INTEGER}
