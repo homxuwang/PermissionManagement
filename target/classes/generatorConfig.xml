@@ -51,41 +51,41 @@
         <!--            <ignoreColumn column="geom"></ignoreColumn>-->
         <!--        </table>-->
 
-        <table schema="public" tableName="sys_userinfo" domainObjectName="UserInfo"
+        <table tableName="Sys_UserInfo" domainObjectName="UserInfo"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"
                enableSelectByExample="false"
                selectByExampleQueryId="false">
         </table>
-        <table tableName="sys_role" domainObjectName="SysRole"
-               enableCountByExample="false"
-               enableUpdateByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               selectByExampleQueryId="false">
-        </table>
-        <table tableName="sys_role_permission" domainObjectName="SysRolePermission"
-               enableCountByExample="false"
-               enableUpdateByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               selectByExampleQueryId="false">
-        </table>
-        <table tableName="sys_permission" domainObjectName="SysPermission"
-               enableCountByExample="false"
-               enableUpdateByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               selectByExampleQueryId="false">
-        </table>
-        <table tableName="sys_user_role" domainObjectName="SysUserRole"
-               enableCountByExample="false"
-               enableUpdateByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               selectByExampleQueryId="false">
-        </table>
+            <table tableName="Sys_Role" domainObjectName="SysRole"
+                   enableCountByExample="false"
+                   enableUpdateByExample="false"
+                   enableDeleteByExample="false"
+                   enableSelectByExample="false"
+                   selectByExampleQueryId="false">
+            </table>
+            <table tableName="Sys_Role_Permission" domainObjectName="SysRolePermission"
+                   enableCountByExample="false"
+                   enableUpdateByExample="false"
+                   enableDeleteByExample="false"
+                   enableSelectByExample="false"
+                   selectByExampleQueryId="false">
+            </table>
+            <table tableName="Sys_Permission" domainObjectName="SysPermission"
+                   enableCountByExample="false"
+                   enableUpdateByExample="false"
+                   enableDeleteByExample="false"
+                   enableSelectByExample="false"
+                   selectByExampleQueryId="false">
+            </table>
+            <table tableName="Sys_User_Role" domainObjectName="SysUserRole"
+                   enableCountByExample="false"
+                   enableUpdateByExample="false"
+                   enableDeleteByExample="false"
+                   enableSelectByExample="false"
+                   selectByExampleQueryId="false">
+            </table>
     </context>
 
 </generatorConfiguration>

@@ -1,0 +1,14 @@
+server:
+  port: 8081
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/permission_management
+    username: postgres
+    password: 12345
+mybatis:
+  #mapper.xml的位置
+  mapper-locations: classpath:./mapper/*Mapper.xml
+  #定义实体类的别名
+  type-aliases-package: io.github.homxuwang.entity
