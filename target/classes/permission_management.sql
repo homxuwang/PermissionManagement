@@ -383,64 +383,54 @@ ALTER TABLE ONLY public.sys_userinfo ALTER COLUMN id SET DEFAULT nextval('public
 -- Data for Name: sys_permission; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.sys_permission (id, permission_description, permission_name, permission_type, status, parent_id, url) FROM stdin;
-1	系统管理	system:*	menu	1	0	\N
-2	角色管理	system:role:*	menu	1	1	/role/config
-3	密码修改	system:password	menu	1	1	/user/password/edition
-4	操作日志	system:log:*	menu	1	1	/handle/operation/log
-5	新增角色	system:role:create	url	1	1	/role/addtion
-6	用户管理	system:admin:*	menu	1	1	/user/config
-7	新增用户	system:user:create	url	1	1	/user/addition
-\.
+INSERT INTO public.sys_permission VALUES (1, '系统管理', 'system:*', 'menu', 1, 0, NULL);
+INSERT INTO public.sys_permission VALUES (2, '角色管理', 'system:role:*', 'menu', 1, 1, '/role/config');
+INSERT INTO public.sys_permission VALUES (3, '密码修改', 'system:password', 'menu', 1, 1, '/user/password/edition');
+INSERT INTO public.sys_permission VALUES (4, '操作日志', 'system:log:*', 'menu', 1, 1, '/handle/operation/log');
+INSERT INTO public.sys_permission VALUES (5, '新增角色', 'system:role:create', 'url', 1, 1, '/role/addtion');
+INSERT INTO public.sys_permission VALUES (6, '用户管理', 'system:admin:*', 'menu', 1, 1, '/user/config');
+INSERT INTO public.sys_permission VALUES (7, '新增用户', 'system:user:create', 'url', 1, 1, '/user/addition');
 
 
 --
 -- Data for Name: sys_role; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.sys_role (id, role_name, status, description, remark) FROM stdin;
-1	superAdmin	1	超级管理员	拥有所有权限
-2	admin	1	系统管理员	拥有部分权限
-3	user	1	普通用户	\N
-\.
+INSERT INTO public.sys_role VALUES (1, 'superAdmin', 1, '超级管理员', '拥有所有权限');
+INSERT INTO public.sys_role VALUES (2, 'admin', 1, '系统管理员', '拥有部分权限');
+INSERT INTO public.sys_role VALUES (3, 'user', 1, '普通用户', '');
 
 
 --
 -- Data for Name: sys_role_permission; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.sys_role_permission (id, role_id, permission_id) FROM stdin;
-1	1	1
-2	1	2
-3	1	3
-4	1	4
-5	1	5
-6	1	6
-7	1	7
-8	2	2
-\.
+INSERT INTO public.sys_role_permission VALUES (1, 1, 1);
+INSERT INTO public.sys_role_permission VALUES (2, 1, 2);
+INSERT INTO public.sys_role_permission VALUES (3, 1, 3);
+INSERT INTO public.sys_role_permission VALUES (4, 1, 4);
+INSERT INTO public.sys_role_permission VALUES (5, 1, 5);
+INSERT INTO public.sys_role_permission VALUES (6, 1, 6);
+INSERT INTO public.sys_role_permission VALUES (7, 1, 7);
+INSERT INTO public.sys_role_permission VALUES (8, 2, 2);
 
 
 --
 -- Data for Name: sys_user_role; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.sys_user_role (id, user_id, role_id) FROM stdin;
-1	1	1
-2	2	2
-3	3	3
-\.
+INSERT INTO public.sys_user_role VALUES (1, 1, 1);
+INSERT INTO public.sys_user_role VALUES (2, 2, 2);
+INSERT INTO public.sys_user_role VALUES (3, 3, 3);
 
 
 --
 -- Data for Name: sys_userinfo; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.sys_userinfo (id, mobile_phone, user_name, password, email, status, salt) FROM stdin;
-1	13022222222	superadmin	827ccb0eea8a706c4c34a16891f84e7b	wanghongxu1994@qq.com	1	\N
-2	13233333333	admin	827ccb0eea8a706c4c34a16891f84e7b	\N	1	\N
-3	13026666666	user1	827ccb0eea8a706c4c34a16891f84e7b	normal@user.com	1	\N
-\.
+INSERT INTO public.sys_userinfo VALUES (1, '13022222222', 'superadmin', '827ccb0eea8a706c4c34a16891f84e7b', 'wanghongxu1994@qq.com', 1, '');
+INSERT INTO public.sys_userinfo VALUES (2, '13233333333', 'admin', '827ccb0eea8a706c4c34a16891f84e7b', '', 1, '');
+INSERT INTO public.sys_userinfo VALUES (3, '13026666666', 'user1', '827ccb0eea8a706c4c34a16891f84e7b', 'normal@user.com', 1, '');
 
 
 --
