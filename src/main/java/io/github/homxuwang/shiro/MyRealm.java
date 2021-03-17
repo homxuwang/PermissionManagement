@@ -1,10 +1,13 @@
 package io.github.homxuwang.shiro;
 
+import io.github.homxuwang.dao.SysPermissionMapper;
+import io.github.homxuwang.dao.SysRoleMapper;
 import io.github.homxuwang.dao.UserInfoMapper;
+import io.github.homxuwang.entity.SysRole;
 import io.github.homxuwang.entity.UserInfo;
 import io.github.homxuwang.utils.JWTUtil;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -28,6 +31,12 @@ public class MyRealm extends AuthorizingRealm {
     @Autowired
     private UserInfoMapper userInfoMapper;
 
+    @Autowired
+    private SysRoleMapper roleMapper;
+
+    @Autowired
+    private SysPermissionMapper sysPermissionMapper;
+
     /**
      * 大坑！，必须重写此方法，不然Shiro会报错
      */
@@ -43,9 +52,14 @@ public class MyRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         String username = JWTUtil.getUsername(principals.toString());
         UserInfo user = userInfoMapper.findByUsername(username);
+        SysRole userRole = roleMapper.findRoleByUsername(user.getUserName());
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
-        simpleAuthorizationInfo.addRole(user.getRole());
-        Set<String> permission = new HashSet<>(Arrays.asList(user.getPermission().split(",")));
+        simpleAuthorizationInfo.addRole(userRole.getRoleName());
+        //先通过user对应的roleid获取它对应的permission集合
+        //然后提取出permissionName的集合
+        Set<String> permission = (Set<String>) sysPermissionMapper.findPermissionByRoleId(userRole.getId())
+                .stream()
+                .map(sysPermission -> sysPermission.getPermissionName());
         simpleAuthorizationInfo.addStringPermissions(permission);
         return simpleAuthorizationInfo;
     }
@@ -62,12 +76,12 @@ public class MyRealm extends AuthorizingRealm {
             throw new AuthenticationException("token invalid");
         }
 
-        UserBean userBean = userService.getUser(username);
-        if (userBean == null) {
+        UserInfo user = userInfoMapper.findByUsername(username);
+        if (user == null) {
             throw new AuthenticationException("User didn't existed!");
         }
 
-        if (! JWTUtil.verify(token, username, userBean.getPassword())) {
+        if (! JWTUtil.verify(token, username, user.getPassword())) {
             throw new AuthenticationException("Username or password error");
         }
 

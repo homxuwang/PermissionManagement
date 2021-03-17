@@ -2,6 +2,7 @@ package io.github.homxuwang.entity;
 
 import java.io.Serializable;
 
+
 public class UserInfo implements Serializable {
     private Integer id;
 

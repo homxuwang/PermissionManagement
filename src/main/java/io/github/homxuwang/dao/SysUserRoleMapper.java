@@ -1,6 +1,7 @@
 package io.github.homxuwang.dao;
 
 import io.github.homxuwang.entity.SysUserRole;
+import org.apache.ibatis.annotations.Mapper;
 
 public interface SysUserRoleMapper {
     int deleteByPrimaryKey(Integer id);

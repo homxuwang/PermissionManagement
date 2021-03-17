@@ -1,6 +1,7 @@
 package io.github.homxuwang.dao;
 
 import io.github.homxuwang.entity.SysRolePermission;
+import org.apache.ibatis.annotations.Mapper;
 
 public interface SysRolePermissionMapper {
     int deleteByPrimaryKey(Integer id);

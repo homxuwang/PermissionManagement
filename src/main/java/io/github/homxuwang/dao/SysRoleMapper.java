@@ -16,5 +16,6 @@ public interface SysRoleMapper {
 
     int updateByPrimaryKey(SysRole record);
 
-    SysRole findRolebyUserName(@Param("username") String username);
+    //通过username查找Role
+    SysRole findRoleByUsername(@Param("username") String username);
 }
