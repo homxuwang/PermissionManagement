@@ -1,10 +1,9 @@
 package io.github.homxuwang.dao;
 
 import io.github.homxuwang.entity.UserInfo;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Component;
 
-@Component
 public interface UserInfoMapper {
     int deleteByPrimaryKey(Integer id);
 
