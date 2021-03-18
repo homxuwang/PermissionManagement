@@ -17,6 +17,12 @@ public class ResponseBean {
         this.data = data;
     }
 
+    public ResponseBean(StatusCode statusCode,Object data) {
+        this.code = statusCode.getCode();
+        this.msg = statusCode.getMsg();
+        this.data = data;
+    }
+
     public int getCode() {
         return code;
     }

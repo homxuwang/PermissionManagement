@@ -32,6 +32,14 @@
       sys_userinfo
     WHERE user_name=#{username}
   </select>
+  <select id="findSaltByUsername" resultType="java.lang.String">
+    select
+        sys_userinfo.salt
+    from
+        sys_userinfo
+    where
+        user_name=#{username}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from public.sys_userinfo
     where id = #{id,jdbcType=INTEGER}

@@ -50,6 +50,7 @@ public class MyRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+
         String username = JWTUtil.getUsername(principals.toString());
         UserInfo user = userInfoMapper.findByUsername(username);
         SysRole userRole = roleMapper.findRoleByUsername(user.getUserName());
