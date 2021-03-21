@@ -55,6 +55,7 @@ public class JWTUtil {
     public static String sign(String username, String secret) {
         try {
             Date date = new Date(System.currentTimeMillis()+EXPIRE_TIME);
+            //这里的secret是前端传来的密码 和 数据库中的密码并不一样（数据库中是md5后的密码+salt组合后又生成的md5值）
             Algorithm algorithm = Algorithm.HMAC256(secret);
             // 附带username信息
             return JWT.create()
