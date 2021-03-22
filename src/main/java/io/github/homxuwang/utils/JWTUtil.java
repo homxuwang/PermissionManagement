@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import org.springframework.util.DigestUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
@@ -52,10 +53,11 @@ public class JWTUtil {
      * @param secret 用户的密码
      * @return 加密的token
      */
-    public static String sign(String username, String secret) {
+    public static String sign(String username, String secret,String userSalt) {
         try {
             Date date = new Date(System.currentTimeMillis()+EXPIRE_TIME);
             //这里的secret是前端传来的密码 和 数据库中的密码并不一样（数据库中是md5后的密码+salt组合后又生成的md5值）
+            secret = DigestUtils.md5DigestAsHex((secret+userSalt).getBytes());
             Algorithm algorithm = Algorithm.HMAC256(secret);
             // 附带username信息
             return JWT.create()

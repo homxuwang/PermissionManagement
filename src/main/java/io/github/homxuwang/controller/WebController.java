@@ -48,7 +48,7 @@ public class WebController {
                 //数据库中的密码为password+salt的组合，需要相加后再进行MD5验证
                 .equals(DigestUtils.md5DigestAsHex((password+userSalt).getBytes())
                 )) {
-            return new ResponseBean(StatusCode.Success, JWTUtil.sign(username, password));
+            return new ResponseBean(StatusCode.Success, JWTUtil.sign(username, password,userSalt));
         } else {
             throw new UnauthorizedException();
         }
@@ -77,7 +77,7 @@ public class WebController {
     }
 
     @GetMapping("/require_permission")
-    @RequiresPermissions(logical = Logical.AND, value = {"view", "edit"})
+    @RequiresPermissions(logical = Logical.AND, value = {"system:role:*"})
     public ResponseBean requirePermission() {
         return new ResponseBean(200, "You are visiting permission require edit,view", null);
     }

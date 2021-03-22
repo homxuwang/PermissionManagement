@@ -70,7 +70,9 @@ public class MyRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken auth) throws AuthenticationException {
-        String token = (String) auth.getCredentials();
+
+//        String token = (String) auth.getCredentials();
+        String token = (String) auth.getPrincipal();
         // 解密获得username，用于和数据库进行对比
         String username = JWTUtil.getUsername(token);
         if (username == null) {
@@ -86,6 +88,6 @@ public class MyRealm extends AuthorizingRealm {
             throw new AuthenticationException("Username or password error");
         }
 
-        return new SimpleAuthenticationInfo(token, token, "my_realm");
+        return new SimpleAuthenticationInfo(token, token, getName());
     }
 }
