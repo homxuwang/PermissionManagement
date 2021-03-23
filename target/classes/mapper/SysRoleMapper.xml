@@ -17,15 +17,8 @@
     from sys_role
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <select id="findRoleByUsername" resultType="io.github.homxuwang.entity.SysRole">
+  <select id="findRoleByUsername" resultType="io.github.homxuwang.entity.SysRole" resultMap="BaseResultMap">
     SELECT
-      sys_userinfo.id,
-      sys_userinfo.mobile_phone,
-      sys_userinfo.user_name,
-      sys_userinfo.password,
-      sys_userinfo.email,
-      sys_userinfo.status,
-      sys_userinfo.salt,
       sys_role.id,
       sys_role.role_name,
       sys_role.status,

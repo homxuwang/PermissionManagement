@@ -79,7 +79,7 @@ public class WebController {
     @GetMapping("/require_permission")
     @RequiresPermissions(logical = Logical.AND, value = {"system:role:*"})
     public ResponseBean requirePermission() {
-        return new ResponseBean(200, "You are visiting permission require edit,view", null);
+        return new ResponseBean(200, "You are visiting permission require system:role:*", null);
     }
 
     @RequestMapping(path = "/401")

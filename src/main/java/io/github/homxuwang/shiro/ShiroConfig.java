@@ -37,7 +37,12 @@ public class ShiroConfig {
 
         return manager;
     }
-
+    /**
+     * 先走 filter ，然后 filter 如果检测到请求头存在 token，则用 token 去 login，走 Realm 去验证
+     *
+     * @param securityManager the security manager
+     * @return the shiro filter factory bean
+     */
     @Bean("shiroFilter")
     public ShiroFilterFactoryBean factory(DefaultWebSecurityManager securityManager) {
         ShiroFilterFactoryBean factoryBean = new ShiroFilterFactoryBean();

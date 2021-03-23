@@ -3,6 +3,7 @@ package io.github.homxuwang.shiro;
 import io.github.homxuwang.dao.SysPermissionMapper;
 import io.github.homxuwang.dao.SysRoleMapper;
 import io.github.homxuwang.dao.UserInfoMapper;
+import io.github.homxuwang.entity.SysPermission;
 import io.github.homxuwang.entity.SysRole;
 import io.github.homxuwang.entity.UserInfo;
 import io.github.homxuwang.utils.JWTUtil;
@@ -19,9 +20,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class MyRealm extends AuthorizingRealm {
@@ -50,19 +49,33 @@ public class MyRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+        System.out.println("————权限认证————");
+        try{
+            String username = JWTUtil.getUsername(principals.toString());
+            UserInfo user = userInfoMapper.findByUsername(username);
+            SysRole userRole = roleMapper.findRoleByUsername(user.getUserName());
+            SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
+            simpleAuthorizationInfo.addRole(userRole.getRoleName());
+            System.out.println("userRole --->"+userRole.getRoleName());
+            //先通过user对应的roleid获取它对应的permission集合
+            //然后提取出permissionName的集合
+            List<SysPermission> sysPermissions = sysPermissionMapper.findPermissionByRoleId(userRole.getId());
 
-        String username = JWTUtil.getUsername(principals.toString());
-        UserInfo user = userInfoMapper.findByUsername(username);
-        SysRole userRole = roleMapper.findRoleByUsername(user.getUserName());
-        SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
-        simpleAuthorizationInfo.addRole(userRole.getRoleName());
-        //先通过user对应的roleid获取它对应的permission集合
-        //然后提取出permissionName的集合
-        Set<String> permission = (Set<String>) sysPermissionMapper.findPermissionByRoleId(userRole.getId())
-                .stream()
-                .map(sysPermission -> sysPermission.getPermissionName());
-        simpleAuthorizationInfo.addStringPermissions(permission);
-        return simpleAuthorizationInfo;
+            List<String> permissionList = new ArrayList<>();
+            for (SysPermission syspermission:sysPermissions
+                 ) {
+                permissionList.add(syspermission.getPermissionName());
+            }
+
+            Set<String> permission = new HashSet<>(permissionList);
+            System.out.println("permissions --->"+permission);
+            simpleAuthorizationInfo.addStringPermissions(permission);
+            System.out.println("simpleAuthorizationInfo --->"+simpleAuthorizationInfo);
+            return simpleAuthorizationInfo;
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     /**
@@ -70,7 +83,7 @@ public class MyRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken auth) throws AuthenticationException {
-
+        System.out.println("————身份认证方法————");
 //        String token = (String) auth.getCredentials();
         String token = (String) auth.getPrincipal();
         // 解密获得username，用于和数据库进行对比

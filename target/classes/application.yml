@@ -12,3 +12,8 @@ mybatis:
   mapper-locations: classpath:./mapper/*Mapper.xml
   #定义实体类的别名
   type-aliases-package: io.github.homxuwang.entity
+  # 把数据库的下划线字段映射成不带下划线的
+  configuration:
+    map-underscore-to-camel-case: true
+logging:
+  level.io.github.homxuwang.dao: debug
