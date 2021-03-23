@@ -81,6 +81,7 @@ public class ShiroConfig {
         return defaultAdvisorAutoProxyCreator;
     }
 
+    //Shiro的Bean的生命周期的管理
     @Bean
     public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
         return new LifecycleBeanPostProcessor();
