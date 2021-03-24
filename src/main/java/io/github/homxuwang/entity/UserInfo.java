@@ -20,6 +20,15 @@ public class UserInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public UserInfo(String userName,String mobilePhone,String password,String email,Integer status,String salt) {
+        this.userName = userName;
+        this.mobilePhone = mobilePhone;
+        this.password = password;
+        this.email = email;
+        this.status = status;
+        this.salt = salt;
+    }
+
     public Integer getId() {
         return id;
     }

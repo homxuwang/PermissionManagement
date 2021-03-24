@@ -45,10 +45,10 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="io.github.homxuwang.entity.UserInfo" >
-    insert into public.sys_userinfo (id, mobile_phone, user_name, 
+    insert into public.sys_userinfo (mobile_phone, user_name,
       password, email, status, 
       salt)
-    values (#{id,jdbcType=INTEGER}, #{mobilePhone,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+    values (#{mobilePhone,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR},
       #{password,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
       #{salt,jdbcType=VARCHAR})
   </insert>
