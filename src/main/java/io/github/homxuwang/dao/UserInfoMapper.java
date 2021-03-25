@@ -22,4 +22,7 @@ public interface UserInfoMapper {
 
     //通过username查找用户信息
     UserInfo findByUsername(@Param("username") String username);
+
+    //更新用户密码
+    Integer updatePasswordByUserName(@Param("password") String newpassword,@Param("username") String username);
 }

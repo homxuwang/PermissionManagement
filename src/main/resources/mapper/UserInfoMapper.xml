@@ -135,4 +135,10 @@
       salt = #{salt,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <update id="updatePasswordByUserName" >
+    update public.sys_userinfo
+    set password = #{password,jdbcType=VARCHAR}
+    where user_name = #{username,jdbcType=VARCHAR}
+  </update>
 </mapper>

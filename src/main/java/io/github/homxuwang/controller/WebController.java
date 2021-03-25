@@ -14,7 +14,6 @@ import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
-import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,31 +27,6 @@ public class WebController {
 
     @Autowired
     private UserInfoMapper userInfoMapper;
-
-
-    /**
-     * 首先检验用户名是否存在，如果存在，获得该用户的盐，然后用该盐和用户输入的密码来计算哈希值，并和数据库中的哈希值进行比较。
-     * @param username
-     * @param password
-     * @return
-     */
-    @PostMapping("/login")
-    public ResponseBean login(@RequestParam("username") String username,
-                              @RequestParam("password") String password) {
-        String userSalt = userInfoMapper.findSaltByUsername(username);
-        if(userSalt == "" || userSalt == null) {
-            throw new UnauthorizedException();
-        }
-        UserInfo userInfo = userInfoMapper.findByUsername(username);
-        if (userInfo.getPassword()
-                //数据库中的密码为password+salt的组合，需要相加后再进行MD5验证
-                .equals(DigestUtils.md5DigestAsHex((password+userSalt).getBytes())
-                )) {
-            return new ResponseBean(StatusCode.Success, JWTUtil.sign(username, password,userSalt));
-        } else {
-            throw new UnauthorizedException();
-        }
-    }
 
     @GetMapping("/article")
     public ResponseBean article() {
