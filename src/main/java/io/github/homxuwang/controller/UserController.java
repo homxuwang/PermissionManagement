@@ -2,10 +2,8 @@ package io.github.homxuwang.controller;
 
 import io.github.homxuwang.bean.ResponseBean;
 import io.github.homxuwang.bean.StatusCode;
-import io.github.homxuwang.dao.SysUserRoleMapper;
-import io.github.homxuwang.dao.UserInfoMapper;
-import io.github.homxuwang.entity.SysUserRole;
-import io.github.homxuwang.entity.UserInfo;
+import io.github.homxuwang.dao.*;
+import io.github.homxuwang.entity.*;
 import io.github.homxuwang.exception.UnauthorizedException;
 import io.github.homxuwang.utils.JWTUtil;
 import io.github.homxuwang.utils.PasswordUtil;
@@ -21,9 +19,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * @Author homxu
@@ -41,6 +41,15 @@ public class UserController {
 
     @Autowired
     private SysUserRoleMapper userRoleMapper;
+
+    @Autowired
+    private SysRoleMapper roleMapper;
+
+    @Autowired
+    private SysPermissionMapper permissionMapper;
+
+    @Autowired
+    private SysRolePermissionMapper rolePermissionMapper;
 
     /**
      * 用户注册
@@ -140,6 +149,7 @@ public class UserController {
      * @return
      */
     @PostMapping("/change_password")
+    @Transactional
     @RequiresAuthentication
     public ResponseBean changePassword(  @RequestParam("username") String username,
                                          @RequestParam("oldpassword") String oldpassword,
@@ -149,7 +159,7 @@ public class UserController {
         UserInfo user = userInfoMapper.findByUsername(username);
 
         if(user == null) {
-            return new ResponseBean(StatusCode.InvalidParams,"username: " +username +" does not exists!");
+            return new ResponseBean(StatusCode.AccountNotExist,"username: " +username +" does not exists!");
         }
 
         if(!user.getPassword().equals(
@@ -169,7 +179,6 @@ public class UserController {
         }
 
         newpassword = PasswordUtil.getSaltPassword(newpassword,user.getSalt());
-        LOGGER.info("newpassword:" + newpassword);
 
         Integer result = userInfoMapper.updatePasswordByUserName(newpassword,username);
         if(result == 1){
@@ -179,16 +188,4 @@ public class UserController {
         }
     }
 
-    /**
-     * 更改用户的权限许可 身份为admin或superadmin可以修改用户的permission
-     * @param username_and_permissions 用户名和要修改为的permission（数组）
-     * @return
-     */
-    @PostMapping("/change_permissions")
-    @RequiresRoles(logical = Logical.OR,value = {"admin","superadmin"})
-    public ResponseBean changePermission(@RequestBody HashMap<String,Object> username_and_permissions){
-        System.out.println(username_and_permissions.toString());
-
-        return new ResponseBean(StatusCode.Success,username_and_permissions.toString());
-    }
 }

@@ -20,6 +20,27 @@
     from sys_permission
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <!--  根据多个permission名查对应的对象-->
+  <select id="findPermissionsByPermissionNames" parameterType="java.util.List" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_permission
+    <where>
+      <if test="permissionnames != null">
+            <!-- 循环传入的集合参数
+             collection:传入参数中的集合的变量名称
+             item:每次循环从集合中取出的数据保存到item中
+             open:循环开始拼接的字符串
+             close:循环结束拼接的字符串
+             separator:循环中拼接的分隔符
+            -->
+        <foreach collection="permissionnames" item="permissionname" open="permission_name in(" close=")" separator=",">
+            #{permissionname}
+        </foreach>
+      </if>
+    </where>
+  </select>
+  
   <select id="findPermissionByRoleId" resultType="io.github.homxuwang.entity.SysPermission">
     select
       sys_permission.id,

@@ -18,4 +18,7 @@ public interface SysRoleMapper {
 
     //通过username查找Role
     SysRole findRoleByUsername(@Param("username") String username);
+
+    //通过role_name查找Role
+    SysRole findRoleByRoleName(@Param("role_name") String rolename);
 }

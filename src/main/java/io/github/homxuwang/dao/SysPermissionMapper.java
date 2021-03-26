@@ -21,4 +21,7 @@ public interface SysPermissionMapper {
 
     //根据roleId
     List<SysPermission> findPermissionByRoleId(@Param("roleId") Integer roleId);
+
+    //根据premission_name 集合 查找对应的id集合
+    List<SysPermission> findPermissionsByPermissionNames(@Param("permissionnames") List<String> psermissions);
 }

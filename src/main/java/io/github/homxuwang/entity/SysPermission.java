@@ -74,4 +74,17 @@ public class SysPermission implements Serializable {
     public void setUrl(String url) {
         this.url = url == null ? null : url.trim();
     }
+
+    @Override
+    public String toString() {
+        return "SysPermission{" +
+                "id=" + id +
+                ", permissionDescription='" + permissionDescription + '\'' +
+                ", permissionName='" + permissionName + '\'' +
+                ", permissionType='" + permissionType + '\'' +
+                ", status=" + status +
+                ", parentId=" + parentId +
+                ", url='" + url + '\'' +
+                '}';
+    }
 }

@@ -4,7 +4,8 @@ server:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/permission_management
+    # reWriteBatchedInserts=true 批量插入时有性能提升
+    url: jdbc:postgresql://localhost:5432/permission_management?reWriteBatchedInserts=true
     username: postgres
     password: 12345
 mybatis:

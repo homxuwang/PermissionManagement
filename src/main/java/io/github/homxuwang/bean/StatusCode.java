@@ -17,8 +17,9 @@ public enum StatusCode {
     AccountPasswordNotMatch(502,"账号密码不匹配!"),
     AccountHasBeenLocked(503,"账号已被锁定,请联系管理员!"),
     AccountValidateFail(504,"账户验证失败!"),
-
-    CurrUserHasNotPermission(505,"当前用户没有权限访问该资源或者操作！"),
+    AccountNotExist(505,"用户不存在!"),
+    RoleNotExist(506,"Role不存在！"),
+    CurrUserHasNotPermission(507,"当前用户没有权限访问该资源或者操作！"),
 
     PasswordCanNotBlank(1000,"密码不能为空!"),
     OldPasswordNotMatch(1001,"原密码不正确!"),
