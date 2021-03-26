@@ -179,7 +179,7 @@ ALTER SEQUENCE public."SysRole_id_seq" OWNED BY public.sys_role.id;
 
 CREATE TABLE public.sys_userinfo (
     id integer NOT NULL,
-    mobile_phone character varying(255) NOT NULL,
+    mobile_phone character varying(255),
     user_name character varying(50) NOT NULL,
     password character varying(255) NOT NULL,
     email character varying(255),
@@ -413,6 +413,8 @@ INSERT INTO public.sys_role_permission VALUES (5, 1, 5);
 INSERT INTO public.sys_role_permission VALUES (6, 1, 6);
 INSERT INTO public.sys_role_permission VALUES (7, 1, 7);
 INSERT INTO public.sys_role_permission VALUES (8, 2, 2);
+INSERT INTO public.sys_role_permission VALUES (9, 2, 3);
+INSERT INTO public.sys_role_permission VALUES (10, 3, 2);
 
 
 --
@@ -422,6 +424,10 @@ INSERT INTO public.sys_role_permission VALUES (8, 2, 2);
 INSERT INTO public.sys_user_role VALUES (1, 1, 1);
 INSERT INTO public.sys_user_role VALUES (2, 2, 2);
 INSERT INTO public.sys_user_role VALUES (3, 3, 3);
+INSERT INTO public.sys_user_role VALUES (4, 5, 2);
+INSERT INTO public.sys_user_role VALUES (5, 6, 2);
+INSERT INTO public.sys_user_role VALUES (7, 26, 3);
+INSERT INTO public.sys_user_role VALUES (8, 28, 3);
 
 
 --
@@ -431,6 +437,10 @@ INSERT INTO public.sys_user_role VALUES (3, 3, 3);
 INSERT INTO public.sys_userinfo VALUES (1, '13022222222', 'superadmin', '827ccb0eea8a706c4c34a16891f84e7b', 'wanghongxu1994@qq.com', 1, NULL);
 INSERT INTO public.sys_userinfo VALUES (2, '13233333333', 'admin', '7e7ceff66661e095f103b8fc6c7deaa5', NULL, 1, 'e37f454961d2dfd4897525b7ec2a8957');
 INSERT INTO public.sys_userinfo VALUES (3, '13026666666', 'user1', 'a096132c608d04b9811d089f76ab4073', 'normal@user.com', 1, 'af7262898217d04c1f16e136614066ec');
+INSERT INTO public.sys_userinfo VALUES (5, '13026329718', 'admin1', '3b9678894aab34dd9e34c97a3a935941', 'normal1@user.com', 1, '872466f0e78298d8293f7af3824d5c22');
+INSERT INTO public.sys_userinfo VALUES (6, '13026329718', 'admin2register', '6b0d203403c038fb520a556c8928027b', 'wanghongxu1994@qq.com', 1, '1e0144c6a4466469fa5255415fcfb2b9');
+INSERT INTO public.sys_userinfo VALUES (26, NULL, 'user12', 'b1843cf7dd73bf641cc413452fbb0afa', NULL, 1, '043318650989d14908ec25b74bc499c3');
+INSERT INTO public.sys_userinfo VALUES (28, NULL, 'user13', '86b7a54adcdf9b652336bd68f78a4f06', NULL, 1, '3a4f34415cad7e738c7cfa0b1a6ea622');
 
 
 --
@@ -451,14 +461,14 @@ SELECT pg_catalog.setval('public."SysRole_id_seq"', 1, false);
 -- Name: SysUserInfo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public."SysUserInfo_id_seq"', 1, false);
+SELECT pg_catalog.setval('public."SysUserInfo_id_seq"', 28, true);
 
 
 --
 -- Name: Sys_User_Role_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public."Sys_User_Role_id_seq"', 1, false);
+SELECT pg_catalog.setval('public."Sys_User_Role_id_seq"', 8, true);
 
 
 --
