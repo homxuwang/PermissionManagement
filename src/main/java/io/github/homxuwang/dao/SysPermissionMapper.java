@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+@Mapper
 public interface SysPermissionMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -24,4 +25,7 @@ public interface SysPermissionMapper {
 
     //根据premission_name 集合 查找对应的id集合
     List<SysPermission> findPermissionsByPermissionNames(@Param("permissionnames") List<String> psermissions);
+
+    //查找所有
+    List<SysPermission> findAllPermission();
 }

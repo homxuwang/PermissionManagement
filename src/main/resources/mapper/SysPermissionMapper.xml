@@ -20,6 +20,11 @@
     from sys_permission
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="findAllPermission" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_permission
+  </select>
   <!--  根据多个permission名查对应的对象-->
   <select id="findPermissionsByPermissionNames" parameterType="java.util.List" resultMap="BaseResultMap">
     select
