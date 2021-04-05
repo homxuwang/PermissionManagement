@@ -1,6 +1,7 @@
 package io.github.homxuwang.shiro.filter;
 
 import io.github.homxuwang.shiro.JWTToken;
+import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,14 +55,26 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
      */
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
+        /*判断是否带有 token*/
         if (isLoginAttempt(request, response)) {
+            //执行登录
             try {
-                executeLogin(request, response);
+                if(executeLogin(request, response)){
+                    String[] arra = (String[])mappedValue;
+                    Subject subject = getSubject(request, response);
+                    for (String s : arra) {
+                        //判断权限
+                        if (subject.isPermitted(s)){
+                            return true;
+                        }
+                    }
+                }
             } catch (Exception e) {
-                response401(request, response);
+                e.printStackTrace();
             }
+            return false;
         }
-        return true;
+        return false;
     }
 
     /**
