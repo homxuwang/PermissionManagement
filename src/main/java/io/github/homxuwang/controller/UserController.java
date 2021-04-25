@@ -19,11 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 /**
  * @Author homxu
@@ -60,7 +56,7 @@ public class UserController {
      * @param confirmPassword 确认输入密码
      * @return
      */
-    @PostMapping("/register")
+    @PostMapping(value={"/register"})
     @Transactional
     public ResponseBean userRegister(@RequestParam("username") String username,
                                      @RequestParam("password") String password,
@@ -118,12 +114,12 @@ public class UserController {
      * @param password 密码
      * @return
      */
-    @PostMapping("/login")
+    @PostMapping(value={"/login"})
     public ResponseBean login(@RequestParam("username") String username,
                               @RequestParam("password") String password) {
         String userSalt = userInfoMapper.findSaltByUsername(username);
         if(userSalt == "" || userSalt == null) {
-            throw new UnauthorizedException();
+            throw new UnauthorizedException("user salt is null!");
         }
         UserInfo userInfo = userInfoMapper.findByUsername(username);
         if(userInfo.getStatus() == 0){
@@ -148,7 +144,7 @@ public class UserController {
      * @param confirmnewpassword
      * @return
      */
-    @PostMapping("/change_password")
+    @PostMapping(value= {"/change_password"})
     @Transactional
     @RequiresAuthentication
     public ResponseBean changePassword(  @RequestParam("username") String username,

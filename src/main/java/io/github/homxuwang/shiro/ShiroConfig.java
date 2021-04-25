@@ -73,9 +73,12 @@ public class ShiroConfig {
          * http://shiro.apache.org/web.html#urls-
          */
         Map<String, String> filterRuleMap = new LinkedHashMap<>();
+
         // swagger接口文档
         filterRuleMap.put("/swagger-ui.html", "anon");
-        filterRuleMap.put("/user/login", "anon");
+//        filterRuleMap.put("/user/login", "anon");
+//        filterRuleMap.put("/user/register", "anon");
+
         // 动态加载URL与对应的权限
         List<SysPermission> urlList = permissionService.findAllPermission();
         if (urlList.size() >0) {
@@ -88,7 +91,6 @@ public class ShiroConfig {
         }
         // 所有请求通过我们自己的JWT Filter
         filterRuleMap.put("/**", "jwt");
-
         // 访问401和404页面不通过我们的Filter
         filterRuleMap.put("/401", "anon");
         factoryBean.setFilterChainDefinitionMap(filterRuleMap);

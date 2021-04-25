@@ -21,6 +21,7 @@ import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/web")
 public class WebController {
 
     private static final Logger LOGGER = LogManager.getLogger(WebController.class);
@@ -28,7 +29,7 @@ public class WebController {
     @Autowired
     private UserInfoMapper userInfoMapper;
 
-    @GetMapping("/article")
+    @GetMapping(value= {"/article"})
     public ResponseBean article() {
         Subject subject = SecurityUtils.getSubject();
         if (subject.isAuthenticated()) {
@@ -38,19 +39,19 @@ public class WebController {
         }
     }
 
-    @GetMapping("/require_auth")
+    @GetMapping(value= {"/require_auth"})
     @RequiresAuthentication
     public ResponseBean requireAuth() {
         return new ResponseBean(200, "You are authenticated", null);
     }
 
-    @GetMapping("/require_role")
+    @GetMapping(value= {"/require_role"})
     @RequiresRoles("admin")
     public ResponseBean requireRole() {
         return new ResponseBean(200, "You are visiting require_role", null);
     }
 
-    @GetMapping("/require_permission")
+    @GetMapping(value= {"/require_permission"})
 //    @RequiresPermissions(logical = Logical.AND, value = {"system:role:*"})
     public ResponseBean requirePermission() {
         return new ResponseBean(200, "You are visiting permission require system:role:*", null);

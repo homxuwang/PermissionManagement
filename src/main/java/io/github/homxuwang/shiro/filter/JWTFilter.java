@@ -55,26 +55,14 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
      */
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
-        /*判断是否带有 token*/
         if (isLoginAttempt(request, response)) {
-            //执行登录
             try {
-                if(executeLogin(request, response)){
-                    String[] arra = (String[])mappedValue;
-                    Subject subject = getSubject(request, response);
-                    for (String s : arra) {
-                        //判断权限
-                        if (subject.isPermitted(s)){
-                            return true;
-                        }
-                    }
-                }
+                executeLogin(request, response);
             } catch (Exception e) {
-                e.printStackTrace();
+                response401(request, response);
             }
-            return false;
         }
-        return false;
+        return true;
     }
 
     /**
