@@ -36,9 +36,14 @@ public class TestController {
     }
 
     @GetMapping(value = {"/require_admin"})
-    @RequiresRoles(logical = Logical.OR,value = {"admin","superadmin"})
+//    @RequiresRoles(logical = Logical.OR,value = {"admin","superadmin"})
     public ResponseBean require_admin() {
+        Subject subject = SecurityUtils.getSubject();
+        if (subject.isAuthenticated()) {
+            return new ResponseBean(StatusCode.Success, null);
+        } else {
+            return new ResponseBean(401,"Subject does not have role [admin]", null);
+        }
 
-        return new ResponseBean(200,"You are visiting require_admin", null);
     }
 }
