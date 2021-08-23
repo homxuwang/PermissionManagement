@@ -1,11 +1,15 @@
 package io.github.homxuwang.shiro.filter;
 
 import io.github.homxuwang.shiro.JWTToken;
+import io.github.homxuwang.utils.SpringContextUtil;
+import org.apache.shiro.realm.Realm;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
+import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.jca.context.SpringContextResourceAdapter;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.ServletRequest;
@@ -13,6 +17,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collection;
 
 public class JWTFilter extends BasicHttpAuthenticationFilter {
 
@@ -40,6 +45,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         JWTToken token = new JWTToken(authorization);
         // 提交给realm进行登入，如果错误他会抛出异常并被捕获
         getSubject(request, response).login(token);
+
         // 如果没有抛出异常则代表登入成功，返回true
         return true;
     }

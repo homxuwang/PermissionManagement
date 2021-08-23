@@ -34,4 +34,11 @@ public class TestController {
 //        }
         return new ResponseBean(200,"You are visiting require_superadmin", null);
     }
+
+    @GetMapping(value = {"/require_admin"})
+    @RequiresRoles(logical = Logical.OR,value = {"admin","superadmin"})
+    public ResponseBean require_admin() {
+
+        return new ResponseBean(200,"You are visiting require_admin", null);
+    }
 }

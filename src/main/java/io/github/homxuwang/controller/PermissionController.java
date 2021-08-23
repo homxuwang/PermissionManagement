@@ -54,7 +54,7 @@ public class PermissionController {
      */
     @Transactional
     @PostMapping("/get_permissions_by_role_name")
-    @RequiresRoles(logical = Logical.OR,value = {"admin","superadmin"})
+//    @RequiresRoles(logical = Logical.OR,value = {"admin","superadmin"})
     public List<SysPermission> getPermissions(@Param("roleName") String roleName){
         LOGGER.info("roleName ----> " + roleName);
         try{

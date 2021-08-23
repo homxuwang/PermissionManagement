@@ -57,7 +57,7 @@ public class WebController {
         return new ResponseBean(200, "You are visiting permission require system:role:*", null);
     }
 
-    @RequestMapping(path = "/401")
+    @RequestMapping(value = "/401")
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ResponseBean unauthorized() {
         return new ResponseBean(401, "Unauthorized", null);

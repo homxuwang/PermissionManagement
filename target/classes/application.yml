@@ -16,6 +16,6 @@ mybatis:
   # 把数据库的下划线字段映射成不带下划线的
   configuration:
     map-underscore-to-camel-case: true
-logging:
+#logging:
   # 打印mybatis的查询SQL
-  level.io.github.homxuwang.dao: debug
+#  level.io.github.homxuwang.dao: debug
